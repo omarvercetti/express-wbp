@@ -1,0 +1,39 @@
+// controllers/eateries.js
+
+// Import the Model
+const eateryModel = require('../models/eatery');
+
+// Controller function to get all eateries
+async function index(req, res) {
+  try {
+    const eateries = await eateryModel.getAll();
+    res.render('eateries/index', { eateries });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
+}
+
+// Controller function to get a specific eatery by ID
+async function show(req, res) {
+  try {
+    const eatery = await eateryModel.getOne(req.params.id);
+    if (!eatery) {
+      return res.status(404).json({ error: 'Eatery not found' });
+    }
+    res.render('eateries/show', { eatery });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
+}
+
+// Export the controller functions
+module.exports = {
+  index,
+  show,
+};
+module.exports = {
+  index,
+  show,
+};
